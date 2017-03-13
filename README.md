@@ -22,8 +22,8 @@ Automatisierung des Maische Kochens mit minimalem Aufwand und lediglich eines ES
 
 - ein ESP8266 (D1 mini oder ESP-12E)
 - ein Relais oder SSR
-- ein DS18b20 Messfühler
-- zur Steuerung des Maische Rührwerks (Scheibenwischermotor) einen Motor Treiber zB. VNH2SP30
+- ein DS18B20 Messfühler
+- zur Steuerung des Maische Rührwerks (Scheibenwischermotor) einen Motortreiber, z.B. VNH2SP30
 - optional ein Display (LCD I2C 1602).
 
 ### Verkabelung
@@ -36,7 +36,7 @@ Automatisierung des Maische Kochens mit minimalem Aufwand und lediglich eines ES
 - Installiere libraries
   - OneWire.h
   - DallasTemperature.h
-  - NewLiquidCrystal https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home
+  - NewLiquidCrystal: https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home (bitte [1.2.1](https://bitbucket.org/fmalpartida/new-liquidcrystal/downloads/) benutzen)
   - PID_v1.h
   - ArduinoJson.h
   - ESPAsyncTCP: https://github.com/me-no-dev/ESPAsyncTCP
