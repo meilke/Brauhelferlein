@@ -277,13 +277,13 @@ google.charts.setOnLoadCallback(chartInit);
   response->printf(R"V0G0N(<!DOCTYPE html><html><head><title>Settings</title>
 </head><body>
 <h1>PID settings</h1>
-Output: %-7.2f<br>
+Output: %s<br>
 <form action='/settings' method='post' target='_self'>
-kP: <input type='text' name='Kp' value="%.0f" /><br>
-kI: <input type='text' name='Ki' value="%.0f" /><br>
-kD: <input type='text' name='Kd' value="%.0f" /><br>
+kP: <input type='text' name='Kp' value="%s" /><br>
+kI: <input type='text' name='Ki' value="%s" /><br>
+kD: <input type='text' name='Kd' value="%s" /><br>
 <input type='submit' value='Apply'></form>
-</body></html>  )V0G0N",Output,myPID.GetKp(),myPID.GetKi(),myPID.GetKd());
+</body></html>  )V0G0N", dtostrf(Output, 9, 2), dtostrf(myPID.GetKp(), 5, 0), dtostrf(myPID.GetKi(), 5, 0), dtostrf(myPID.GetKd(), 5, 0));
     request->send(response);
   });
 
@@ -422,7 +422,7 @@ JsonObject& root = jsonBuffer.createObject();
     else
     {
       temperature = tnew;
-      char buf[10], str_temp[7];
+      char buf[10];
       uint32_t passedT = 0;
       
       // calculate the time we are set in
@@ -448,12 +448,10 @@ JsonObject& root = jsonBuffer.createObject();
       lcd.setCursor(10,1); lcd.print(buf);
 
       Serial.print("T: ");  Serial.println(temperature);
-      dtostrf(temperature, 5, 2, str_temp);
-      lcd.setCursor(0,0); lcd.print("T:"); lcd.print(str_temp); lcd.print((char)223);
+      lcd.setCursor(0,0); lcd.print("T:"); lcd.print(dtostrf(temperature, 5, 2)); lcd.print((char)223);
       root["temp"] = temperature;
       
-      dtostrf(myStore.solltemp, 5, 2, str_temp);
-      lcd.setCursor(0,1); lcd.print("S:"); lcd.print(str_temp); lcd.print((char)223);
+      lcd.setCursor(0,1); lcd.print("S:"); lcd.print(dtostrf(myStore.solltemp, 5, 2)); lcd.print((char)223);
       root["sollT"] = myStore.solltemp;
 
       load = (Output-minWindow)*100.0 / (WindowSize-minWindow);
