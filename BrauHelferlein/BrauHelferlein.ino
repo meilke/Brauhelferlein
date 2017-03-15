@@ -422,7 +422,7 @@ JsonObject& root = jsonBuffer.createObject();
     else
     {
       temperature = tnew;
-      char buf[10];
+      char buf[10], str_temp[7];
       uint32_t passedT = 0;
       
       // calculate the time we are set in
@@ -448,12 +448,12 @@ JsonObject& root = jsonBuffer.createObject();
       lcd.setCursor(10,1); lcd.print(buf);
 
       Serial.print("T: ");  Serial.println(temperature);
-      snprintf (buf, sizeof(buf), "%6.2f", temperature);
-      lcd.setCursor(0,0); lcd.print("T:"); lcd.print(buf); lcd.print((char)223);
+      dtostrf(temperature, 5, 2, str_temp);
+      lcd.setCursor(0,0); lcd.print("T:"); lcd.print(str_temp); lcd.print((char)223);
       root["temp"] = temperature;
       
-      snprintf (buf, sizeof(buf), "%6.2f", myStore.solltemp);
-      lcd.setCursor(0,1); lcd.print("S:"); lcd.print(buf); lcd.print((char)223);
+      dtostrf(myStore.solltemp, 5, 2, str_temp);
+      lcd.setCursor(0,1); lcd.print("S:"); lcd.print(str_temp); lcd.print((char)223);
       root["sollT"] = myStore.solltemp;
 
       load = (Output-minWindow)*100.0 / (WindowSize-minWindow);
