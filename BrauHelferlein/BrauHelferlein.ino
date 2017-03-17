@@ -283,7 +283,7 @@ kP: <input type='text' name='Kp' value="%s" /><br>
 kI: <input type='text' name='Ki' value="%s" /><br>
 kD: <input type='text' name='Kd' value="%s" /><br>
 <input type='submit' value='Apply'></form>
-</body></html>  )V0G0N", dtostrf(Output, 9, 2), dtostrf(myPID.GetKp(), 5, 0), dtostrf(myPID.GetKi(), 5, 0), dtostrf(myPID.GetKd(), 5, 0));
+</body></html>  )V0G0N", String(Output, 2).c_str(), String(myPID.GetKp(), 2).c_str(), String(myPID.GetKi(), 2).c_str(), String(myPID.GetKd(), 2).c_str());
     request->send(response);
   });
 
@@ -411,7 +411,6 @@ JsonObject& root = jsonBuffer.createObject();
     float tnew = DS18B20.getTempCByIndex(0);
     DS18B20.requestTemperatures();
     yield();
-    
     // test if we have valid temp reading
     if (tnew==DEVICE_DISCONNECTED_C || // DISCONNECTED
         (tnew==85.0 && abs(tnew - temperature) > 2 ) ) // we read 85 uninitialized but we are not close to 85 hot
@@ -448,13 +447,14 @@ JsonObject& root = jsonBuffer.createObject();
       lcd.setCursor(10,1); lcd.print(buf);
 
       Serial.print("T: ");  Serial.println(temperature);
-      lcd.setCursor(0,0); lcd.print("T:"); lcd.print(dtostrf(temperature, 5, 2)); lcd.print((char)223);
+      lcd.setCursor(0,0); lcd.print("T:"); lcd.print(dtostrf(temperature, 5, 2, buf)); lcd.print((char)223);
       root["temp"] = temperature;
       
-      lcd.setCursor(0,1); lcd.print("S:"); lcd.print(dtostrf(myStore.solltemp, 5, 2)); lcd.print((char)223);
+      lcd.setCursor(0,1); lcd.print("S:"); lcd.print(dtostrf(myStore.solltemp, 5, 2, buf)); lcd.print((char)223);
       root["sollT"] = myStore.solltemp;
 
       load = (Output-minWindow)*100.0 / (WindowSize-minWindow);
+      Serial.println(load);
       snprintf (buf, sizeof(buf), "%3u%%", load);
       lcd.setCursor(12,0); 
       lcd.print(buf);
